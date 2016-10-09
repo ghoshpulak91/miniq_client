@@ -9,7 +9,7 @@ load_arr.each do |lib|
         require File.expand_path(File.dirname(__FILE__)+"/"+lib)
 end
 
-class TestPostMessages < Minitest::Test
+class TestMiniQClient < Minitest::Test
         def setup
         end
 

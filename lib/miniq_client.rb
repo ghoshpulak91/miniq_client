@@ -7,16 +7,23 @@ load_arr.each do |lib|
 	require File.expand_path(File.dirname(__FILE__)+"/"+lib)
 end
 
+# This is MiniQClient
 class MiniQClient
 
+	# Initializing miniq client
+	# @param [String] host miniq server host
+	# @param [String] port miniq server port
+	# @param [String] queue name
+	# @param [Hash] args_hash 
+	# @retrun [MiniQClient]
 	def initialize(host, port, queue_name, args_hash = {})
 		@base_url = "http://#{host}:#{port}/messages/#{queue_name}"
 		@httpclint = HTTPClient.new
 	end
-	
-	# This method implemets 'DELETE /messages/{id}' endpoint
-	# @param [Hash] params request parameter hash. Key is 'id'
-	# @return [Hash] return a response_hash. Keys are status, content_type and body.
+
+	# This implemets producer. This add a message into a queue
+	# @param [String] msg message to be added
+	# @return [String, nil] message id generated
 	def add(msg)
 		begin
 			header = {"Content-Type" => "application/json"}
@@ -38,6 +45,8 @@ class MiniQClient
 		end
 	end
 	
+	# This implemets consumer. This gets messages to be processed
+	# @retrun [Array] an array of messages
 	def get()
 		messages = []
 		begin
@@ -60,7 +69,10 @@ class MiniQClient
 		end
 	end
 
-	private	
+	private
+	# When a consumer gets a set of messages, it must notify MiniQ that it has processed each message (individually).
+	# @param [String] id message id
+	# @return [Boolean] 
 	def notify(id)
 		begin
 			url = @base_url + "/" + id 
