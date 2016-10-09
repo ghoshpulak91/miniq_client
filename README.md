@@ -1,1 +1,1 @@
-# miniq_client
+# miniq_server
