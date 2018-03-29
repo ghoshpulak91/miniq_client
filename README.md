@@ -82,7 +82,7 @@ host = "localhost"
 port = "7777"
 queue_name = "test2"
 miniq_client = MiniQClient.new(host, port, queue_name)
-msg = "Stayzilla_test"
+msg = "abc"
 id = miniq_client.add(msg)
 $log.info "id: #{id}"
 messages = miniq_client.get
